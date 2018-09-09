@@ -71,9 +71,15 @@ swiftmailer:
 fos_rest:
     routing_loader:
         default_format: json
+        include_format: false
     view:
         view_response_listener: 'force'
+    body_converter:
+        enabled: true
+    param_fetcher_listener: true
 
 sensio_framework_extra:
     view:
         annotations: true
+    request:
+        converters: true

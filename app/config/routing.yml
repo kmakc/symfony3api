@@ -5,3 +5,10 @@ app:
 movies:
     type: rest
     resource: AppBundle\Controller\MoviesController
+
+movies_post:
+    path: /movies
+    methods: [POST]
+    defaults:
+        _controller: AppBundle\Controller\MoviesController:postMoviesAction
+        _format: json
