@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Annotation as App;
 
 /**
  * @ORM\Table(name="role")
@@ -23,6 +24,7 @@ class Role
     /**
      * @var Person
      * @ORM\ManyToOne(targetEntity="Person")
+     * @App\DeserializeEntity(type="AppBundle\Entity\Person", idField="id", idGetter="getId", setter="setPerson")
      */
     private $person;
 
