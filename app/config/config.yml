@@ -81,7 +81,7 @@ fos_rest:
     param_fetcher_listener: true
     exception:
         enabled: true
-        #exception_controller: 'AppBundle\Controller\ExceptionController::showAction'
+        exception_controller: 'AppBundle\Controller\ExceptionController::showAction'
 
 sensio_framework_extra:
     view:
