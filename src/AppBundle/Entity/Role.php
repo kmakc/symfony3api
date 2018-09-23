@@ -3,12 +3,21 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Annotation as App;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RoleRepository")
+ * @ExclusionPolicy("ALL")
+ * @Hateoas\Relation(
+ *     "person",
+ *     href=@Hateoas\Route("get_human", parameters={"person" = "expr(object.getPerson().getId())"})
+ * )
  */
 class Role
 {
@@ -18,6 +27,8 @@ class Role
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"Default", "Deserialize"})
+     * @Expose()
      */
     private $id;
 
@@ -25,7 +36,8 @@ class Role
      * @var Person
      * @ORM\ManyToOne(targetEntity="Person")
      * @App\DeserializeEntity(type="AppBundle\Entity\Person", idField="id", idGetter="getId", setter="setPerson")
-     * @Assert\NotBlank()
+     * @Groups({"Deserialize"})
+     * @Expose()
      */
     private $person;
 
@@ -35,6 +47,8 @@ class Role
      * @ORM\Column(name="played_name", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(min=1, max=100)
+     * @Groups({"Default", "Deserialize"})
+     * @Expose()
      */
     private $playedName;
 
