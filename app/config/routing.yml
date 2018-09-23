@@ -23,3 +23,10 @@ humans_post:
     defaults:
         _controller: AppBundle\Controller\HumansController:postHumansAction
         _format: json
+
+movies_roles_post:
+    path: /movies/{movie}/roles
+    methods: [POST]
+    defaults:
+        _controller: AppBundle\Controller\MoviesController:postMoviesAction
+        _format: json

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Role;
 use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
 use FOS\RestBundle\Controller\ControllerTrait;
@@ -67,5 +68,33 @@ class MoviesController extends AbstractController
         }
 
         return $movie;
+    }
+
+    /**
+     * @Rest\View()
+     */
+    public function getMovieRolesAction(Movie $movie)
+    {
+        return $movie->getRoles();
+    }
+
+    /**
+     * @Rest\View(statusCode=201)
+     * @ParamConverter("role", converter="fos_rest.request_body")
+     * @Rest\NoRoute()
+     */
+    public function postMovieRolesAction(Movie $movie, Role $role)
+    {
+        $role->setMovie($movie);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($role);
+        $movie->getRoles()->add($role);
+
+        $em->persist($movie);
+        $em->flush();
+
+        return $role;
     }
 }
