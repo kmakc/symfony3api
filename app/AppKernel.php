@@ -21,7 +21,9 @@ class AppKernel extends Kernel
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
 
-            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle()
+            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+
+            new \Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -21,14 +21,14 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
         $passwordEncoder = $this->container->get('security.password_encoder');
         $user1 = new User();
         $user1->setUsername('john_doe');
-        $user1->setApiKey('fikffkRWJFG#(*$');
+        //$user1->setApiKey('fikffkRWJFG#(*$');
         $user1->setPassword($passwordEncoder->encodePassword($user1, 'QWEqwe123'));
 
         $manager->persist($user1);
 
         $user2 = new User();
         $user2->setUsername('john_doe2');
-        $user2->setApiKey('DSFKJDOSF*U#FODAFHEUAF');
+        //$user2->setApiKey('DSFKJDOSF*U#FODAFHEUAF');
         $user2->setPassword($passwordEncoder->encodePassword($user1, '123456'));
 
         $manager->persist($user2);

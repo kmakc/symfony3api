@@ -34,13 +34,6 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiKey;
-
     public function getRoles()
     {
         return ['ROLE_USER'];
@@ -62,22 +55,6 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @param string $apiKey
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->apiKey = $apiKey;
     }
 
     /**
