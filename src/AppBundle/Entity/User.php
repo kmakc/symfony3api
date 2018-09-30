@@ -30,6 +30,13 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", unique=true)
      */
     private $apiKey;
@@ -41,6 +48,7 @@ class User implements UserInterface
 
     public function getPassword()
     {
+        return $this->password;
     }
 
     public function getSalt()
@@ -78,5 +86,13 @@ class User implements UserInterface
     public function setUsername($username)
     {
         $this->username = $username;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 }
