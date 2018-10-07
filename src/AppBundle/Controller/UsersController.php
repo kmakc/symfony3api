@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 /**
  * @Security("is_anonymous() or is_authenticated()")
  */
-class UserController extends AbstractController
+class UsersController extends AbstractController
 {
     /**
      * @var UserPasswordEncoderInterface

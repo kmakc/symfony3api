@@ -23,6 +23,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
         $user1->setUsername('john_doe');
         //$user1->setApiKey('fikffkRWJFG#(*$');
         $user1->setPassword($passwordEncoder->encodePassword($user1, 'QWEqwe123'));
+        $user1->setRoles([User::ROLE_ADMIN]);
 
         $manager->persist($user1);
 
@@ -30,6 +31,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
         $user2->setUsername('john_doe2');
         //$user2->setApiKey('DSFKJDOSF*U#FODAFHEUAF');
         $user2->setPassword($passwordEncoder->encodePassword($user1, '123456'));
+        $user2->setRoles([User::ROLE_ADMIN]);
 
         $manager->persist($user2);
 

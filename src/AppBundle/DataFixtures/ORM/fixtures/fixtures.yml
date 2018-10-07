@@ -1,0 +1,31 @@
+#  php bin/console hautelook:fixtures:load -n
+AppBundle\Entity\Movie:
+    movie_{1..100}:
+        title: <streetName()>
+        year: <numberBetween(2000, 2018)>
+        time: <numberBetween(59, 122)>
+        description: <sentence()>
+
+AppBundle\Entity\Person:
+    person_{1..50}:
+       firstName: <firstName()>
+       lastName: <lastName()>
+       dateOfBirth: <dateTimeBetween('1990-01-01', '2005-01-01')>
+
+AppBundle\Entity\Role:
+    role_{1..500}:
+        person: '@person_<numberBetween(1, 50)>'
+        movie: '@movie_<numberBetween(1, 100)>'
+        playedName: <firstName()> <lastName()>
+
+AppBundle\Entity\User:
+    user1:
+        username: john_doe
+        password: QWEqwe123
+        roles:
+            - 'ROLE_ADMIN'
+    user2:
+        username: jane doe2
+        password: 123456
+        roles:
+            - 'ROLE_ADMIN'

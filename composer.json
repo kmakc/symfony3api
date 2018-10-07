@@ -33,8 +33,11 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "hautelook/alice-bundle": "2.0@beta",
+        "nelmio/alice": "3.1",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "theofidry/alice-data-fixtures": "1.0"
     },
     "scripts": {
         "symfony-scripts": [
@@ -50,11 +53,16 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "reset-db": [
+            "php bin/console doctrine:schema:drop --force",
+            "php bin/console doctrine:schema:create",
+            "php bin/console hautelook:fixtures:load -n"
         ]
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "7.1"
         },
         "sort-packages": true
     },
