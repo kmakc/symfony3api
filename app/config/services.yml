@@ -34,7 +34,7 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
     AppBundle\Serializer\DoctrineEntityDeserializationSubscriber:
-        tags: ['jms_serizlizer.event_subscriber']
+        tags: ['jms_serializer.event_subscriber']
 
     AppBundle\DataFixtures\ORM\Processor\UserProcessor:
-        tags: [{ name: fidry_alice_data_fixtures.processor }]
+        tags: [ { name: fidry_alice_data_fixtures.processor } ]

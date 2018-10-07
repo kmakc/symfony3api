@@ -54,14 +54,14 @@ class User implements UserInterface
      * @var string
      * @Assert\NotBlank(groups={"Default"})
      * @Assert\Expression(
-     *     "this.getPassword() === this.getRetypedPassword()",
+     *     "this.getPassword() === this.getRetyped()",
      *     message="Passwords does not match",
      *     groups={"Default", "Patch"}
      * )
      * @Serializer\Type("string")
      * @Serializer\Groups({"Deserialize"})
      */
-    private $retypedPassword;
+    private $retyped;
 
     /**
      * @var array
@@ -78,12 +78,28 @@ class User implements UserInterface
         return $this->id;
     }
 
-/**
- * @return string
- */
-public function getRetypedPassword(): ?string
+    /**
+     * @param string $password
+     */
+    public function setPassword(?string $password)
     {
-        return $this->retypedPassword;
+        $this->password = $password;
+    }
+
+    /**
+     * @param string $retyped
+     */
+    public function setRetyped(?string $retyped)
+    {
+        $this->retyped = $retyped;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRetyped(): ?string
+    {
+        return $this->retyped;
     }
 
     /**
@@ -100,25 +116,17 @@ public function getRetypedPassword(): ?string
      * @return (Role|string)[] The user roles
      */
     public function getRoles()
-{
-    return $this->roles;
-}
-
-    /**
-     * @param string $retypedPassword
-     */
-    public function setRetypedPassword(?string $retypedPassword): void
     {
-        $this->retypedPassword = $retypedPassword;
+        return $this->roles;
     }
 
     /**
      * @param array $roles
      */
     public function setRoles(array $roles): void
-{
-    $this->roles = $roles;
-}
+    {
+        $this->roles = $roles;
+    }
 
     /**
      * Returns the password used to authenticate the user.
@@ -127,9 +135,9 @@ public function getRetypedPassword(): ?string
      * @return string The password
      */
     public function getPassword()
-{
-    return $this->password;
-}
+    {
+        return $this->password;
+    }
 
     /**
      * Returns the salt that was originally used to encode the password.
@@ -137,18 +145,18 @@ public function getRetypedPassword(): ?string
      * @return string|null The salt
      */
     public function getSalt()
-{
+    {
 
-}
+    }
 
     /**
      * Returns the username used to authenticate the user.
      * @return string The username
      */
     public function getUsername()
-{
-    return $this->username;
-}
+    {
+        return $this->username;
+    }
 
     /**
      * Removes sensitive data from the user.
@@ -156,9 +164,9 @@ public function getRetypedPassword(): ?string
      * the plain-text password is stored on this object.
      */
     public function eraseCredentials()
-{
+    {
 
-}
+    }
 
     /**
      * @param string $username
@@ -166,13 +174,5 @@ public function getRetypedPassword(): ?string
     public function setUsername(?string $username)
     {
         $this->username = $username;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(?string $password)
-    {
-        $this->password = $password;
     }
 }

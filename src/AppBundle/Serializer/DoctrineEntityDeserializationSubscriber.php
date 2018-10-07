@@ -21,12 +21,12 @@ class DoctrineEntityDeserializationSubscriber implements EventSubscriberInterfac
     /**
      * @var Registry
      */
-    private $doctrineRigistry;
+    private $doctrineRegistry;
 
     public function __construct(AnnotationReader $annotationReader, Registry $doctrineRegistry)
     {
         $this->annotationReader = $annotationReader;
-        $this->doctrineRigistry = $doctrineRegistry;
+        $this->doctrineRegistry = $doctrineRegistry;
     }
 
     public static function getSubscribedEvents()
@@ -103,7 +103,7 @@ class DoctrineEntityDeserializationSubscriber implements EventSubscriberInterfac
 
             if (!$reflection->hasMethod($annotation->setter)) {
                 throw new \LogicException(
-                    "Object {$reflection->getName()} does not have thr {$annotation->setter} method"
+                    "Object {$reflection->getName()} does not have the {$annotation->setter} method"
                 );
             }
 
@@ -116,10 +116,10 @@ class DoctrineEntityDeserializationSubscriber implements EventSubscriberInterfac
 
             $entityId = $deserializedEntity->{$annotation->idGetter}();
 
-            $repository = $this->doctrineRigistry->getRepository($annotation->type);
+            $repository = $this->doctrineRegistry->getRepository($annotation->type);
             $entity = $repository->find($entityId);
 
-            if (null == $entity) {
+            if (null === $entity) {
                 throw new NotFoundHttpException(
                     "Resource {$reflection->getShortName()}/$entityId"
                 );
