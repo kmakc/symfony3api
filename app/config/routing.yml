@@ -41,3 +41,7 @@ movies_roles_post:
 user:
     resource: '@AppBundle/Controller/UserController.php'
     type: annotation
+
+tokens:
+    resource: AppBundle\Controller\TokensController
+    type: rest
