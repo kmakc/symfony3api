@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Person
@@ -59,7 +59,6 @@ class Person
      * @Serializer\Expose()
      */
     private $dateOfBirth;
-
 
     /**
      * Get id
@@ -143,4 +142,3 @@ class Person
         return $this->dateOfBirth;
     }
 }
-

@@ -13,9 +13,13 @@ class UserProcessor implements ProcessorInterface
      */
     private $passwordEncoder;
 
+    /**
+     * UserProcessor constructor.
+     *
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     */
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
-
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -31,6 +35,5 @@ class UserProcessor implements ProcessorInterface
 
     public function postProcess(string $id, $object): void
     {
-        // TODO: Implement postProcess() method.
     }
 }

@@ -6,7 +6,6 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\EntityMerger;
 use AppBundle\Security\TokenStorage;
 use AppBundle\Exception\ValidationException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -84,8 +83,10 @@ class UsersController extends AbstractController
      * @ParamConverter("user", converter="fos_rest.request_body",
      *     options={"deserializationContext"={"groups"={"Deserialize"}}})
      */
-    public function postUserAction(User $user, ConstraintViolationListInterface $validationErrors, Request $request)
-    {
+    public function postUserAction(
+        User $user,
+        ConstraintViolationListInterface $validationErrors
+    ) {
         if (count($validationErrors) > 0) {
             throw new ValidationException($validationErrors);
         }
