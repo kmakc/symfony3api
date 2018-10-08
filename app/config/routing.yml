@@ -70,3 +70,9 @@ images_post:
     defaults:
         _controller: AppBundle\Controller\ImagesController:postImagesAction
         _format: json
+
+images_upload_put:
+    path: /images/{image}/upload
+    methods: [PUT]
+    defaults:
+        _controller: AppBundle\Controller\ImagesController:putImageUploadAction

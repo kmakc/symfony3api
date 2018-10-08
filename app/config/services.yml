@@ -63,3 +63,10 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - AppBundle\Entity\Image
+
+    AppBundle\Controller\ImagesController:
+        class: AppBundle\Controller\ImagesController
+        arguments:
+            - '@AppBundle\Repository\ImageRepository'
+            - '%image_directory%'
+            - '%image_base_url%'
