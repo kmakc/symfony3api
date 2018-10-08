@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\EntityMerger;
+use AppBundle\Security\TokenStorage;
 use AppBundle\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,14 +40,29 @@ class UsersController extends AbstractController
      */
     private $entityMerger;
 
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
+     * UsersController constructor.
+     *
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param JWTEncoderInterface          $JWTEncoder
+     * @param EntityMerger                 $entityMerger
+     * @param TokenStorage                 $tokenStorage
+     */
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
-        JWTEncoderInterface $JWTEncoder,
-        EntityMerger $entityMerger
+        JWTEncoderInterface          $JWTEncoder,
+        EntityMerger                 $entityMerger,
+        TokenStorage                 $tokenStorage
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->JWTEncoder      = $JWTEncoder;
         $this->entityMerger    = $entityMerger;
+        $this->tokenStorage    = $tokenStorage;
     }
 
     /**
@@ -111,6 +127,10 @@ class UsersController extends AbstractController
         $this->entityMerger->merge($theUser, $modifiedUser);
         $this->encodePassword($theUser);
         $this->persistUser($theUser);
+
+        if ($modifiedUser->getPassword()) {
+            $this->tokenStorage->invalidateToken($theUser->getUsername());
+        }
 
         return $theUser;
     }

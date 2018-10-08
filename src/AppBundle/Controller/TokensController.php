@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Security\TokenStorage;
 use FOS\RestBundle\Controller\ControllerTrait;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -30,15 +31,21 @@ class TokensController extends AbstractController
     private $encoder;
 
     /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
      * TokensController constructor.
      *
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param JWTEncoderInterface $encoder
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, JWTEncoderInterface $encoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, JWTEncoderInterface $encoder, TokenStorage $tokenStorage)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->encoder = $encoder;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -64,6 +71,8 @@ class TokensController extends AbstractController
             'username' => $user->getUsername(),
             'exp' => time() + 3600
         ]);
+
+        $this->tokenStorage->storeToken($user->getUsername(), $token);
 
         return new JsonResponse(['token' => $token]);
     }
