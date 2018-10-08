@@ -3,13 +3,15 @@
 namespace AppBundle\Security;
 
 use AppBundle\Entity\User;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class UserVoter extends Voter
 {
     const SHOW = 'show';
+
+    const EDIT = 'edit';
 
     /**
      * @var AccessDecisionManagerInterface
@@ -23,7 +25,7 @@ class UserVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (in_array($attribute, [self::SHOW])) {
+        if (!in_array($attribute, [self::SHOW, self::EDIT])) {
             return false;
         }
 
@@ -42,6 +44,7 @@ class UserVoter extends Voter
 
         switch ($attribute) {
             case self::SHOW:
+            case self::EDIT:
                 return $this->isUserHimself($subject, $token);
         }
 
@@ -51,11 +54,13 @@ class UserVoter extends Voter
     /**
      * @param $subject
      * @param TokenInterface $token
+     *
      * @return bool
      */
     protected function isUserHimself($subject, TokenInterface $token): bool
     {
         $authenticatedUser = $token->getUser();
+
         if (!$authenticatedUser instanceof User) {
             return false;
         }
