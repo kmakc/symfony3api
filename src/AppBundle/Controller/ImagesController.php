@@ -52,6 +52,14 @@ class ImagesController extends AbstractController
     }
 
     /**
+     * @Rest\View()
+     */
+    public function getImagesAction()
+    {
+        return $this->imageRepository->findAll();
+    }
+
+    /**
      * @Rest\NoRoute()
      * @ParamConverter("image", converter="fos_rest.request_body",
      *      options={"deserializationContext"={"groups"={"Deserialize"}}}
@@ -109,7 +117,7 @@ class ImagesController extends AbstractController
         // Copy the tmp file to the final uploads directory
         copy($tmpFilePath, $this->imageDirectory.DIRECTORY_SEPARATOR.$newFileName);
 
-        $image->setUrl($this->imageDirectory . $newFileName);
+        $image->setUrl($this->imageBaseUrl . $newFileName);
 
         $this->persistImage($image);
 
