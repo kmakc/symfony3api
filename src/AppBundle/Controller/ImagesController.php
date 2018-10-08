@@ -2,17 +2,17 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Repository\ImageRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use AppBundle\Entity\Image;
+use AppBundle\Repository\ImageRepository;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 class ImagesController extends AbstractController
 {
@@ -41,8 +41,11 @@ class ImagesController extends AbstractController
      * @param string          $imageDirectory
      * @param string          $imageBaseUrl
      */
-    public function __construct(ImageRepository $imageRepository, string $imageDirectory, string $imageBaseUrl)
-    {
+    public function __construct(
+        ImageRepository $imageRepository,
+        string          $imageDirectory,
+        string          $imageBaseUrl
+    ) {
         $this->imageRepository = $imageRepository;
         $this->imageDirectory  = $imageDirectory;
         $this->imageBaseUrl    = $imageBaseUrl;

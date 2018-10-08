@@ -61,7 +61,7 @@ tokens:
     type: rest
 
 images:
-    resource: resource: AppBundle\Controller\ImagesController
+    resource: AppBundle\Controller\ImagesController
     type: rest
 
 images_post:

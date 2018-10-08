@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Image
@@ -18,6 +19,7 @@ class Image
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"Default"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Image
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Serializer\Groups({"Default", "Deserialize"})
      */
     private $description;
 
@@ -32,6 +35,7 @@ class Image
      * @var string|null
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"Default"})
      */
     private $url;
 
