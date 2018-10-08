@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -32,6 +33,19 @@ class UsersController extends AbstractController
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->JWTEncoder = $JWTEncoder;
+    }
+
+    /**
+     * @Rest\View()
+     * @Security("is_granted('show', theUser)", message="Access denied")
+     */
+    public function getUserAction(?User $theUser)
+    {
+        if (null === $theUser) {
+            throw new NotFoundHttpException();
+        }
+
+        return $theUser;
     }
 
     /**
