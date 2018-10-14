@@ -2,10 +2,12 @@
 
 namespace AppBundle\Resource\Filtering\Movie;
 
-class MovieFilterDefinition
-{
-    private const QUERY_PARAMS_BLACKLIST = ['sortByArray'];
+use AppBundle\Resource\Filtering\AbstractFilterDefinition;
+use AppBundle\Resource\Filtering\FilterDefinitionInterface;
+use AppBundle\Resource\Filtering\SortableFilterDefinitionInterface;
 
+class MovieFilterDefinition extends AbstractFilterDefinition implements FilterDefinitionInterface, SortableFilterDefinitionInterface
+{
     /**
      * @var null|string
      */
@@ -98,14 +100,6 @@ class MovieFilterDefinition
         return $this->timeTo;
     }
 
-    public function getQueryParameters(): array
-    {
-        return array_diff_key(
-            get_object_vars($this),
-            array_flip(self::QUERY_PARAMS_BLACKLIST)
-        );
-    }
-
     /**
      * @return array
      */
@@ -117,7 +111,7 @@ class MovieFilterDefinition
     /**
      * @return string
      */
-    public function getSortBy(): ?string
+    public function getSortByQuery(): ?string
     {
         return $this->sortBy;
     }

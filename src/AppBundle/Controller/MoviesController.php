@@ -126,15 +126,7 @@ class MoviesController extends AbstractController
      */
     public function getMovieRolesAction(Request $request, Movie $movie)
     {
-        return $this->pagination->paginate(
-            $request,
-            'AppBundle:Role',
-            [],
-            'getCountForMovie',
-            [$movie->getId()],
-            'get_movie_roles',
-            ['movie' => $movie->getId()]
-        );
+
     }
 
     /**
