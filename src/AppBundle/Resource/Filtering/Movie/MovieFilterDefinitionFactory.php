@@ -44,6 +44,6 @@ class MovieFilterDefinitionFactory
                 return $carry;
             },
             []
-        ), array_filp(self::ACCEPTED_SORT_FIELDS));
+        ), array_flip(self::ACCEPTED_SORT_FIELDS));
     }
 }
