@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Pagination\Pagination;
 use AppBundle\Entity\EntityMerger;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
 use AppBundle\Repository\MovieRepository;
+use AppBundle\Repository\RoleRepository;
 use FOS\RestBundle\Controller\ControllerTrait;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
@@ -30,9 +32,15 @@ class MoviesController extends AbstractController
      */
     private $entityMerger;
 
-    public function __construct(EntityMerger $entityMerger)
+    /**
+     * @var Pagination
+     */
+    private $pagination;
+
+    public function __construct(EntityMerger $entityMerger, Pagination $pagination)
     {
         $this->entityMerger = $entityMerger;
+        $this->pagination   = $pagination;
     }
 
     /**
@@ -40,30 +48,15 @@ class MoviesController extends AbstractController
      */
     public function getMoviesAction(Request $request)
     {
-        $limit = $request->get('limit', 5);
-        $page  = $request->get('page', 1);
-
-        $offset = ($page - 1) * $limit;
-
-        /** @var MovieRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Movie');
-
-        $movies     = $repository->findBy([], [], $limit, $offset);
-        $movieCount = $repository->countMovies();
-
-        $pageCount  = (int)ceil($movieCount / $limit);
-
-        $collection = new CollectionRepresentation($movies);
-        $paginated  = new PaginatedRepresentation(
-            $collection,
-            'get_movies',
+        return $this->pagination->paginate(
+            $request,
+            'AppBundle:Movie',
             [],
-            $page,
-            $limit,
-            $pageCount
+            'countMovies',
+            [],
+            'get_movies',
+            []
         );
-
-        return $paginated;
     }
 
     /**
@@ -115,25 +108,15 @@ class MoviesController extends AbstractController
      */
     public function getMovieRolesAction(Request $request, Movie $movie)
     {
-        $roles = $movie->getRoles();
-
-        $limit = $request->get('limit', 3);
-        $page  = $request->get('page', 1);
-
-        $offset    = ($page - 1) * $limit;
-        $pageCount = (int)ceil(count($roles) / $limit);
-
-        $collection = new CollectionRepresentation(array_slice($roles->toArray(), $offset, $limit));
-        $paginated  = new PaginatedRepresentation(
-            $collection,
+        return $this->pagination->paginate(
+            $request,
+            'AppBundle:Role',
+            [],
+            'getCountForMovie',
+            [$movie->getId()],
             'get_movie_roles',
-            ['movie' => $movie->getId()],
-            $page,
-            $limit,
-            $pageCount
+            ['movie' => $movie->getId()]
         );
-
-        return $paginated;
     }
 
     /**
