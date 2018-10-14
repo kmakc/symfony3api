@@ -9,6 +9,8 @@ use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
 use AppBundle\Repository\MovieRepository;
 use AppBundle\Repository\RoleRepository;
+use AppBundle\Resource\Filtering\Movie\MovieFilterDefinition;
+use AppBundle\Resource\Filtering\Movie\MovieFilterDefinitionFactory;
 use AppBundle\Resource\Pagination\PageRequestFactory;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
@@ -51,6 +53,9 @@ class MoviesController extends AbstractController
     {
         $pageRequestFactory = new PageRequestFactory();
         $page               = $pageRequestFactory->fromRequest($request);
+
+        $movieFilterDefinitionFactory = new MovieFilterDefinitionFactory();
+        $movieFilterDefinition        = $movieFilterDefinitionFactory->factory($request);
 
         return $this->pagination->paginate(
             $request,
