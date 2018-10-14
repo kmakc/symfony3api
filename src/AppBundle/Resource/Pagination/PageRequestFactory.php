@@ -20,7 +20,7 @@ class PageRequestFactory
 
         $limit = $request->get(
             self::KEY_LIMIT,
-            self::DEFAULT_PAGE
+            self::DEFAULT_LIMIT
         );
 
         return new Page($page, $limit);

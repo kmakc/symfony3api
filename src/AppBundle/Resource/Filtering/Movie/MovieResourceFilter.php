@@ -55,42 +55,36 @@ class MovieResourceFilter
             $qb->where(
                 $qb->expr()->like('movie.title', ':title')
             );
-
             $qb->setParameter('title', "%{$filter->getTitle()}%");
         }
 
         if (null !== $filter->getYearFrom()) {
-            $qb->where(
+            $qb->andWhere(
                 $qb->expr()->gte('movie.year', ':yearFrom')
             );
-
-            $qb->setParameter('yearFrom', "%{$filter->getYearFrom()}%");
+            $qb->setParameter('yearFrom', $filter->getYearFrom());
         }
 
         if (null !== $filter->getYearTo()) {
-            $qb->where(
+            $qb->andWhere(
                 $qb->expr()->lte('movie.year', ':yearTo')
             );
-
-            $qb->setParameter('yearTo', "%{$filter->getYearTo()}%");
+            $qb->setParameter('yearTo', $filter->getYearTo());
         }
 
         if (null !== $filter->getTimeFrom()) {
-            $qb->where(
+            $qb->andWhere(
                 $qb->expr()->gte('movie.time', ':timeFrom')
             );
-
-            $qb->setParameter('timeFrom', "%{$filter->getTimeFrom()}%");
+            $qb->setParameter('timeFrom', $filter->getTimeFrom());
         }
 
         if (null !== $filter->getTimeTo()) {
-            $qb->where(
+            $qb->andWhere(
                 $qb->expr()->lte('movie.time', ':timeTo')
             );
-
-            $qb->setParameter('timeTo', "%{$filter->getTimeTo()}%");
+            $qb->setParameter('timeTo', $filter->getTimeTo());
         }
-
         return $qb;
     }
 }

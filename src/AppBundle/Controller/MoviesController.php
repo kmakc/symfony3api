@@ -11,6 +11,7 @@ use AppBundle\Repository\MovieRepository;
 use AppBundle\Repository\RoleRepository;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinition;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinitionFactory;
+use AppBundle\Resource\Pagination\Movie\MoviePagination;
 use AppBundle\Resource\Pagination\PageRequestFactory;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
@@ -41,15 +42,25 @@ class MoviesController extends AbstractController
     private $pagination;
 
     /**
+     * @var MoviePagination
+     */
+    private $moviePagination;
+
+    /**
      * MoviesController constructor.
      *
      * @param EntityMerger $entityMerger
      * @param Pagination $pagination
      */
-    public function __construct(EntityMerger $entityMerger, Pagination $pagination)
+    public function __construct(
+        EntityMerger    $entityMerger,
+        Pagination      $pagination,
+        MoviePagination $moviePagination
+    )
     {
-        $this->entityMerger = $entityMerger;
-        $this->pagination   = $pagination;
+        $this->entityMerger    = $entityMerger;
+        $this->pagination      = $pagination;
+        $this->moviePagination = $moviePagination;
     }
 
     /**
@@ -63,15 +74,7 @@ class MoviesController extends AbstractController
         $movieFilterDefinitionFactory = new MovieFilterDefinitionFactory();
         $movieFilterDefinition        = $movieFilterDefinitionFactory->factory($request);
 
-        return $this->pagination->paginate(
-            $request,
-            'AppBundle:Movie',
-            [],
-            'countMovies',
-            [],
-            'get_movies',
-            []
-        );
+        return $this->moviePagination->paginate($page, $movieFilterDefinition);
     }
 
     /**
