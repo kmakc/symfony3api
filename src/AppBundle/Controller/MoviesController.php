@@ -9,6 +9,7 @@ use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
 use AppBundle\Repository\MovieRepository;
 use AppBundle\Repository\RoleRepository;
+use AppBundle\Resource\Pagination\PageRequestFactory;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -48,6 +49,9 @@ class MoviesController extends AbstractController
      */
     public function getMoviesAction(Request $request)
     {
+        $pageRequestFactory = new PageRequestFactory();
+        $page               = $pageRequestFactory->fromRequest($request);
+
         return $this->pagination->paginate(
             $request,
             'AppBundle:Movie',
