@@ -40,6 +40,12 @@ class MoviesController extends AbstractController
      */
     private $pagination;
 
+    /**
+     * MoviesController constructor.
+     *
+     * @param EntityMerger $entityMerger
+     * @param Pagination $pagination
+     */
     public function __construct(EntityMerger $entityMerger, Pagination $pagination)
     {
         $this->entityMerger = $entityMerger;

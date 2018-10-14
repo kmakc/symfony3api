@@ -6,6 +6,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MovieFilterDefinitionFactory
 {
+    /**
+     * @param Request $request
+     *
+     * @return MovieFilterDefinition
+     */
     public function factory(Request $request): MovieFilterDefinition
     {
         return new MovieFilterDefinition(
