@@ -38,3 +38,35 @@ services:
 
     AppBundle\DataFixtures\ORM\Processor\UserProcessor:
         tags: [ { name: fidry_alice_data_fixtures.processor } ]
+
+    AppBundle\Repository\MovieRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Movie
+
+    AppBundle\Repository\RoleRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Role
+
+    AppBundle\Repository\PersonRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Person
+
+    AppBundle\Repository\UserRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\User
+
+    AppBundle\Repository\ImageRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Image
+
+    AppBundle\Controller\ImagesController:
+        class: AppBundle\Controller\ImagesController
+        arguments:
+            - '@AppBundle\Repository\ImageRepository'
+            - '%image_directory%'
+            - '%image_base_url%'

@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\Common\Annotations\AnnotationReader;
 
 class EntityMerger
 {
@@ -14,6 +14,7 @@ class EntityMerger
 
     /**
      * EntityMerger constructor.
+     *
      * @param AnnotationReader $annotationReader
      */
     public function __construct(AnnotationReader $annotationReader)
@@ -63,7 +64,7 @@ class EntityMerger
             }
 
             $entityProperty = $entityReflection->getProperty($changedProperty->getName());
-            $annotation = $this->annotationReader->getPropertyAnnotation($entityProperty, Id::class);
+            $annotation     = $this->annotationReader->getPropertyAnnotation($entityProperty, Id::class);
 
             // Ignore $changes property that has Doctrine @id annotation
             if (null !== $annotation) {

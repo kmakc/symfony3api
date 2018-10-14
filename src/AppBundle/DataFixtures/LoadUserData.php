@@ -6,8 +6,8 @@ use AppBundle\Entity\User;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class LoadUserData extends Fixture implements ContainerAwareInterface
 {
@@ -19,6 +19,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $passwordEncoder = $this->container->get('security.password_encoder');
+
         $user1 = new User();
         $user1->setUsername('john_doe');
         //$user1->setApiKey('fikffkRWJFG#(*$');

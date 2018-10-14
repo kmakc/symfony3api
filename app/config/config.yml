@@ -54,7 +54,6 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path: '%database_path%'
-
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -96,6 +95,13 @@ lexik_jwt_authentication:
     public_key_path: '%jwt_public_key_path%'
     pass_phrase: '%jwt_key_pass_phrase%'
     token_ttl: '%jwt_token_ttl%'
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost
 
 hautelook_alice:
     fixtures_path: 'DataFixtures/ORM/fixtures'

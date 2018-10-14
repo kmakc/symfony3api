@@ -2,21 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use FOS\RestBundle\Controller\ControllerTrait;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use FOS\RestBundle\Controller\ControllerTrait;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use AppBundle\Security\TokenStorage;
 
 /**
  * @Security("is_anonymous() or is_authenticated()")
  */
 class TokensController extends AbstractController
 {
+
     use ControllerTrait;
 
     /**
@@ -30,15 +32,25 @@ class TokensController extends AbstractController
     private $encoder;
 
     /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
      * TokensController constructor.
      *
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param JWTEncoderInterface $encoder
+     * @param JWTEncoderInterface          $encoder
+     * @param TokenStorage                 $tokenStorage
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, JWTEncoderInterface $encoder)
-    {
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        JWTEncoderInterface          $encoder,
+        TokenStorage                 $tokenStorage
+    ) {
         $this->passwordEncoder = $passwordEncoder;
-        $this->encoder = $encoder;
+        $this->encoder         = $encoder;
+        $this->tokenStorage    = $tokenStorage;
     }
 
     /**
@@ -64,6 +76,8 @@ class TokensController extends AbstractController
             'username' => $user->getUsername(),
             'exp' => time() + 3600
         ]);
+
+        $this->tokenStorage->storeToken($user->getUsername(), $token);
 
         return new JsonResponse(['token' => $token]);
     }

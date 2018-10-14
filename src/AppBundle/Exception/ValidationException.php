@@ -7,6 +7,11 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ValidationException extends HttpException
 {
+    /**
+     * ValidationException constructor.
+     *
+     * @param ConstraintViolationListInterface $constraintViolationList
+     */
     public function __construct(ConstraintViolationListInterface $constraintViolationList)
     {
         $message = [];

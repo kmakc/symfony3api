@@ -2,18 +2,17 @@
 
 namespace AppBundle\Security;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
-use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
+use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
@@ -22,9 +21,23 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     private $JWTEncoder;
 
-    public function __construct(JWTEncoderInterface $JWTEncoder)
-    {
-        $this->JWTEncoder = $JWTEncoder;
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
+     * TokenAuthenticator constructor.
+     *
+     * @param JWTEncoderInterface $JWTEncoder
+     * @param TokenStorage        $tokenStorage
+     */
+    public function __construct(
+        JWTEncoderInterface $JWTEncoder,
+        TokenStorage        $tokenStorage
+    ) {
+        $this->JWTEncoder   = $JWTEncoder;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
@@ -35,7 +48,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function getCredentials(Request $request)
     {
         $extractor = new AuthorizationHeaderTokenExtractor('Bearer', 'Authorization');
-        $token = $extractor->extract($request);
+        $token     = $extractor->extract($request);
+
         if (!$token) {
             return null;
         }
@@ -49,6 +63,10 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
             $data = $this->JWTEncoder->decode($credentials);
 
             if (false === $data) {
+                return null;
+            }
+
+            if (!$this->tokenStorage->isTokenValid($data['username'], $credentials)) {
                 return null;
             }
 

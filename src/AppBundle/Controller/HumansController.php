@@ -12,6 +12,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class HumansController extends AbstractController
 {
+
     use ControllerTrait;
 
     /**

@@ -16,16 +16,19 @@ final class DeserializeEntity
      * @Required()
      */
     public $type;
+
     /**
      * @var string
      * @Required()
      */
     public $idField;
+
     /**
      * @var string
      * @Required()
      */
     public $setter;
+
     /**
      * @var string
      * @Required()
