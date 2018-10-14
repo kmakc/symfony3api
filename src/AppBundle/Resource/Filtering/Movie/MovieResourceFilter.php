@@ -85,6 +85,9 @@ class MovieResourceFilter
             );
             $qb->setParameter('timeTo', $filter->getTimeTo());
         }
+
+
+
         return $qb;
     }
 }
