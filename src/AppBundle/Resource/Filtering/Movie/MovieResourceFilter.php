@@ -4,8 +4,9 @@ namespace AppBundle\Resource\Filtering\Movie;
 
 use Doctrine\ORM\QueryBuilder;
 use AppBundle\Repository\MovieRepository;
+use AppBundle\Resource\Filtering\ResourceFilterInterface;
 
-class MovieResourceFilter
+class MovieResourceFilter implements ResourceFilterInterface
 {
     /**
      * @var MovieRepository
