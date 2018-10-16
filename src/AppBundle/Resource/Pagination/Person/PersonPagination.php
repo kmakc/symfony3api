@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Resource\Pagination\Movie;
+namespace AppBundle\Resource\Pagination\Person;
 
 use AppBundle\Resource\Filtering\ResourceFilterInterface;
-use AppBundle\Resource\Filtering\Role\PersonResourceFilter;
+use AppBundle\Resource\Filtering\Person\PersonResourceFilter;
 use AppBundle\Resource\Pagination\AbstractPagination;
 use AppBundle\Resource\Pagination\PaginationInterface;
 

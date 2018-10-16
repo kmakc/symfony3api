@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Resource\Pagination\Movie;
+namespace AppBundle\Resource\Pagination\Role;
 
 use AppBundle\Resource\Filtering\ResourceFilterInterface;
 use AppBundle\Resource\Filtering\Role\RoleResourceFilter;

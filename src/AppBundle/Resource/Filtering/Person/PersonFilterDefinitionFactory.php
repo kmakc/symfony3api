@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Resource\Filtering\Movie;
+namespace AppBundle\Resource\Filtering\Person;
 
 use AppBundle\Resource\Filtering\AbstractFilterDefinitionFactory;
 use AppBundle\Resource\Filtering\FilterDefinitionFactoryInterface;

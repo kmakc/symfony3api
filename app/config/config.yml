@@ -105,3 +105,25 @@ snc_redis:
 
 hautelook_alice:
     fixtures_path: 'DataFixtures/ORM/fixtures'
+
+fos_http_cache:
+    proxy_client:
+        symfony:
+            http:
+                servers:
+                    - movies.local
+                base_url: movies.local/app_dev.php
+    cache_control:
+        defaults:
+            overwrite: false
+        rules:
+            -
+                match:
+                    path: ^/
+                headers:
+                    cache-control:
+                        public: true
+                        max_age: 60
+                        s_maxaage: 10
+                    vary: [X-Accept-version, Accept]
+                    etag: true

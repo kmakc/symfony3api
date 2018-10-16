@@ -7,16 +7,14 @@ use AppBundle\Entity\EntityMerger;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
-use AppBundle\Repository\MovieRepository;
-use AppBundle\Repository\RoleRepository;
-use AppBundle\Resource\Filtering\Movie\MovieFilterDefinition;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinitionFactory;
-use AppBundle\Resource\Filtering\Movie\RoleFilterDefinitionFactory;
+use AppBundle\Resource\Filtering\Role\RoleFilterDefinitionFactory;
 use AppBundle\Resource\Pagination\Movie\MoviePagination;
-use AppBundle\Resource\Pagination\Movie\RolePagination;
+use AppBundle\Resource\Pagination\Role\RolePagination;
 use AppBundle\Resource\Pagination\PageRequestFactory;
-use Hateoas\Representation\CollectionRepresentation;
-use Hateoas\Representation\PaginatedRepresentation;
+use FOS\HttpCacheBundle\Configuration\InvalidatePath;
+use FOS\HttpCacheBundle\Configuration\InvalidateRoute;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,6 +98,8 @@ class MoviesController extends AbstractController
 
     /**
      * @Rest\View()
+     * @InvalidateRoute("get_movie", params={"movie" = {"expression" = "movie.getId()"}})
+     * @InvalidateRoute("get_movies")
      */
     public function deleteMovieAction(?Movie $movie)
     {
@@ -114,6 +114,7 @@ class MoviesController extends AbstractController
 
     /**
      * @Rest\View()
+     * @Cache(public=true, maxage=3600, smaxage=3600)
      */
     public function getMovieAction(?Movie $movie)
     {

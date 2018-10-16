@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Person;
 use AppBundle\Exception\ValidationException;
-use AppBundle\Resource\Filtering\Movie\PersonFilterDefinitionFactory;
-use AppBundle\Resource\Pagination\Movie\PersonPagination;
+use AppBundle\Resource\Filtering\Person\PersonFilterDefinitionFactory;
+use AppBundle\Resource\Pagination\Person\PersonPagination;
 use AppBundle\Resource\Pagination\PageRequestFactory;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Controller\Annotations as Rest;

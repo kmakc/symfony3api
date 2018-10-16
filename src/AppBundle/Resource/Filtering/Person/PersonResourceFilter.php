@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Resource\Filtering\Role;
+namespace AppBundle\Resource\Filtering\Person;
 
 use AppBundle\Resource\Filtering\Person\PersonFilterDefinition;
 use Doctrine\ORM\QueryBuilder;
