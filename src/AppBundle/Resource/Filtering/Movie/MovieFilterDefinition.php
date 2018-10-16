@@ -115,4 +115,9 @@ class MovieFilterDefinition extends AbstractFilterDefinition implements FilterDe
     {
         return $this->sortBy;
     }
+
+    public function getParameters(): array
+    {
+        return get_object_vars($this);
+    }
 }

@@ -9,7 +9,7 @@ abstract  class AbstractFilterDefinition implements FilterDefinitionInterface
     public function getQueryParameters(): array
     {
         return array_diff_key(
-            get_object_vars($this),
+            $this->getParameters(),
             array_flip($this->getQueryParamsBlcaklist())
         );
     }

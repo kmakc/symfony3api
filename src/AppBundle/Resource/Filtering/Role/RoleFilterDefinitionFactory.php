@@ -16,11 +16,11 @@ class RoleFilterDefinitionFactory extends AbstractFilterDefinitionFactory implem
      *
      * @return MovieFilterDefinition
      */
-    public function factory(Request $request): RoleFilterDefinition
+    public function factory(Request $request, ?int $movie): RoleFilterDefinition
     {
         return new RoleFilterDefinition(
             $request->get('playedName'),
-            $request->get('movie'),
+            $movie,
             $request->get('sortBy'),
             $this->sortQueryToArray($request->get('sortBy'))
         );

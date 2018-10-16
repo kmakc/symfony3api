@@ -11,7 +11,9 @@ use AppBundle\Repository\MovieRepository;
 use AppBundle\Repository\RoleRepository;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinition;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinitionFactory;
+use AppBundle\Resource\Filtering\Movie\RoleFilterDefinitionFactory;
 use AppBundle\Resource\Pagination\Movie\MoviePagination;
+use AppBundle\Resource\Pagination\Movie\RolePagination;
 use AppBundle\Resource\Pagination\PageRequestFactory;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
@@ -37,14 +39,14 @@ class MoviesController extends AbstractController
     private $entityMerger;
 
     /**
-     * @var Pagination
-     */
-    private $pagination;
-
-    /**
      * @var MoviePagination
      */
     private $moviePagination;
+
+    /**
+     * @var RolePagination
+     */
+    private $rolePagination;
 
     /**
      * MoviesController constructor.
@@ -55,12 +57,13 @@ class MoviesController extends AbstractController
     public function __construct(
         EntityMerger    $entityMerger,
         Pagination      $pagination,
-        MoviePagination $moviePagination
+        MoviePagination $moviePagination,
+        RolePagination  $rolePagination
     )
     {
         $this->entityMerger    = $entityMerger;
-        $this->pagination      = $pagination;
         $this->moviePagination = $moviePagination;
+        $this->rolePagination  = $rolePagination;
     }
 
     /**
@@ -126,7 +129,16 @@ class MoviesController extends AbstractController
      */
     public function getMovieRolesAction(Request $request, Movie $movie)
     {
+        $pageRequestFactory = new PageRequestFactory();
+        $page = $pageRequestFactory->fromRequest($request);
 
+        $roleFilterDefinitionFactory = new RoleFilterDefinitionFactory();
+        $roleFilterDefinition = $roleFilterDefinitionFactory->factory($request, $movie->getId());
+
+        return $this->rolePagination->paginate(
+            $page,
+            $roleFilterDefinition
+        );
     }
 
     /**
