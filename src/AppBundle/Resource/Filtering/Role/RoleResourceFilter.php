@@ -40,7 +40,7 @@ class RoleResourceFilter implements ResourceFilterInterface
     }
 
 
-    public function getQuery(RoleFilterDefinition $filter): QueryBuilder
+    private function getQuery(RoleFilterDefinition $filter): QueryBuilder
     {
         $qb = $this->repository->createQueryBuilder('role');
 

@@ -2,21 +2,21 @@
 
 namespace AppBundle\Resource\Pagination\Movie;
 
-use AppBundle\Resource\Filtering\Movie\MovieResourceFilter;
 use AppBundle\Resource\Filtering\ResourceFilterInterface;
+use AppBundle\Resource\Filtering\Role\PersonResourceFilter;
 use AppBundle\Resource\Pagination\AbstractPagination;
 use AppBundle\Resource\Pagination\PaginationInterface;
 
-class MoviePagination extends AbstractPagination implements PaginationInterface
+class PersonPagination extends AbstractPagination implements PaginationInterface
 {
-    private const ROUTE  = 'get_movies';
+    private const ROUTE  = 'get_humans';
 
     /**
-     * @var MovieResourceFilter
+     * @var PersonResourceFilter
      */
     private $resourceFilter;
 
-    public function __construct(MovieResourceFilter $resourceFilter)
+    public function __construct(PersonResourceFilter $resourceFilter)
     {
         $this->resourceFilter = $resourceFilter;
     }
