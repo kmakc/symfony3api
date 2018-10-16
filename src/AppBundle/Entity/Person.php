@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Person
@@ -40,7 +40,7 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=70)
+     * @ORM\Column(name="lastName", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=1, max=255)
      * @Serializer\Groups({"Default", "Deserialize"})
@@ -49,12 +49,24 @@ class Person
     private $lastName;
 
     /**
+     * @var string
+     * @ORM\Column(name="biography", type="text", nullable=true)
+     *
+     * @Assert\Length(min=10, max=5000)
+     * @Serializer\Groups({"Default", "Deserialize"})
+     * @Serializer\Expose()
+     * @Serializer\Since("1.1")
+     */
+    private $biography;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateOfBirth", type="date")
-     * @Serializer\Type("DateTime<'Y-m-d'>")
-     * @Assert\NotBlank()
      * @Assert\Date()
+     * @Assert\NotBlank()
+     *
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      * @Serializer\Groups({"Default", "Deserialize"})
      * @Serializer\Expose()
      */
@@ -141,4 +153,21 @@ class Person
     {
         return $this->dateOfBirth;
     }
+
+    /**
+     * @return string
+     */
+    public function getBiography(): string
+    {
+        return $this->biography;
+    }
+
+    /**
+     * @param string $biography
+     */
+    public function setBiography(string $biography)
+    {
+        $this->biography = $biography;
+    }
 }
+
